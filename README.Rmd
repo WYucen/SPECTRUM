@@ -18,47 +18,66 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of SPECTRUM is to ...
+The goal of SPECTRUM(Spatial Pattern Enhanced Cellular and Tissue Recognition Unified Method) is to combine inclusive prior known cell-type specific markers and spatial weighting for cell-type identification and spatial community detection.
 
 ## Installation
 
 You can install the development version of SPECTRUM like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+library(devtools)
+devtools::install_github("WYucen/SPECTRUM")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example that demonstrates how to perform cell type deconvolution using SPECTRUM:
 
 ```{r example}
 library(SPECTRUM)
-## basic example code
+
+# Load example data
 data("mob_demo_data")
 markerList <- mob_demo_data$markerList
 st_data <- mob_demo_data$st_mtx
 position <- mob_demo_data$st_pos
+
+# Set preprocessing parameters
 minGene <- 100
 minSpot <- 5
 
-## Pre-process the spatialcount matrix
+# Preprocess the spatial count matrix
 st_data <- pre_process(st_data = st_data, minGene = minGene, minSpot = minSpot)
-position <- position[colnames(st_data),]
+position <- position[colnames(st_data), ]  # Match position with filtered spots
 
-## Plots a Gabriel Graph based on spatial data
+# Plot Gabriel graph for spatial neighborhood structure
 check_graph(position, data_struct = "dist", dist.th = 1.5, vertex.size = 1, ratio = 0.8)
 
-## Do deconvolution
-pre_prop <- deconvo_process(st_data = st_data, location = position, 
-                data_struct = "dist", dist.th = 1.5,
-                markerList = markerList )
+# Perform deconvolution
+pre_prop <- deconvo_process(
+  st_data = st_data,
+  location = position,
+  data_struct = "dist",
+  dist.th = 1.5,
+  markerList = markerList
+)
+
+# Inspect result
 head(pre_prop)
 
-## Visualize the deconvolution results
-# plot_ct(proportion = pre_prop, position = position, 
-#         ct.select = colnames(pre_prop), NumCols = 5)
-# plot_pie(proportion = pre_prop, position = position, cols = mob_demo_data$ct_cols)
+# Visualize deconvolution proportions
+plot_ct(
+  proportion = pre_prop,
+  position = position,
+  ct.select = colnames(pre_prop),
+  NumCols = 5
+)
 
+# Visualize spatial cell type distribution with pie charts
+plot_pie(
+  proportion = pre_prop,
+  position = position,
+  cols = mob_demo_data$ct_cols
+)
 ```
 
