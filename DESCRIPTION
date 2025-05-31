@@ -1,0 +1,31 @@
+Package: SPECTRUM
+Title: Spatial pattern enhanced cellular and tissue recognition for spatial transcriptomics
+Version: 0.2.0
+Authors@R: 
+    person("Yucen Wang",email = "wangyucen@stu.pku.edu.cn",role = c("aut","cre"))
+Description: A Framework for Spatially Resolved Transcriptomics Analysis to Identify Cell Types and Functional Regions in Complex Tissues.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    deldir,
+    dplyr,
+    fields,
+    ggplot2,
+    gtools,
+    igraph,
+    magrittr,
+    Matrix,
+    matrixStats,
+    NMF,
+    nnls,
+    reshape2,
+    scales,
+    scatterpie,
+    Seurat,
+    stats,
+    stringr
+Depends: 
+    R (>= 3.5.0)
+LazyData: true

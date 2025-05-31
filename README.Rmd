@@ -1,0 +1,64 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# SPECTRUM
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of SPECTRUM is to ...
+
+## Installation
+
+You can install the development version of SPECTRUM like so:
+
+``` r
+# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(SPECTRUM)
+## basic example code
+data("mob_demo_data")
+markerList <- mob_demo_data$markerList
+st_data <- mob_demo_data$st_mtx
+position <- mob_demo_data$st_pos
+minGene <- 100
+minSpot <- 5
+
+## Pre-process the spatialcount matrix
+st_data <- pre_process(st_data = st_data, minGene = minGene, minSpot = minSpot)
+position <- position[colnames(st_data),]
+
+## Plots a Gabriel Graph based on spatial data
+check_graph(position, data_struct = "dist", dist.th = 1.5, vertex.size = 1, ratio = 0.8)
+
+## Do deconvolution
+pre_prop <- deconvo_process(st_data = st_data, location = position, 
+                data_struct = "dist", dist.th = 1.5,
+                markerList = markerList )
+head(pre_prop)
+
+## Visualize the deconvolution results
+# plot_ct(proportion = pre_prop, position = position, 
+#         ct.select = colnames(pre_prop), NumCols = 5)
+# plot_pie(proportion = pre_prop, position = position, cols = mob_demo_data$ct_cols)
+
+```
+
